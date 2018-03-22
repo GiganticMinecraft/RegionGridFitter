@@ -9,5 +9,6 @@ private val worldEditPlugin by lazy {
     Bukkit.getPluginManager().getPlugin("WorldEdit") as WorldEditPlugin
 }
 
-val Player.selection: Selection?
+var Player.selection: Selection?
     get() = worldEditPlugin.getSelection(this)
+    set(selection) = worldEditPlugin.setSelection(this, selection)
