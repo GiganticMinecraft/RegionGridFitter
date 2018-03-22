@@ -2,6 +2,9 @@
 .idea
 /build/
 
+.*
+*.jar
+
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
