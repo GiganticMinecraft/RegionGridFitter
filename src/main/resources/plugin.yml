@@ -1,0 +1,5 @@
+name: region-grid-fitter
+version: 0.1.0-alpha
+main: click.seichi.regiongridfitter.RegionGridFitter
+
+softdepend: [WorldEdit, WorldGuard]
