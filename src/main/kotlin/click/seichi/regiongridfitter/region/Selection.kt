@@ -22,6 +22,17 @@ fun Selection.toSpans(): Triple<RealSpan, RealSpan, RealSpan> {
     return Triple(xyzSpans[0], xyzSpans[1], xyzSpans[2])
 }
 
+infix fun CuboidSelection?.equalsWith(another: CuboidSelection?) =
+    when (this) {
+        null -> another == null
+        else -> another != null &&
+                maximumPoint == another.maximumPoint &&
+                minimumPoint == another.minimumPoint &&
+                world == another.world
+    }
+
+fun CuboidSelection.clone() = CuboidSelection(world, minimumPoint, maximumPoint)
+
 private fun toVertExtendedSelection(world: World, xSpan: RealSpan, zSpan: RealSpan): CuboidSelection {
     val (minX, maxX) = Pair(xSpan.smallEnd, xSpan.largeEnd)
     val (minZ, maxZ) = Pair(zSpan.smallEnd, zSpan.largeEnd)

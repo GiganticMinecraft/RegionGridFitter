@@ -11,4 +11,4 @@ private val worldEditPlugin by lazy {
 
 var Player.selection: Selection?
     get() = worldEditPlugin.getSelection(this)
-    set(selection) = worldEditPlugin.setSelection(this, selection)
+    set(selection) = if (selection != null) worldEditPlugin.setSelection(this, selection) else Unit
