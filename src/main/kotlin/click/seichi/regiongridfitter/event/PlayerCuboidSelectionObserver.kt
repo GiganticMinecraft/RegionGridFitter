@@ -29,7 +29,7 @@ class PlayerCuboidSelectionObserver(private val server: Server, private val host
     private fun notifySelectionDifference() = server
             .getPlayerSelections()
             .mapValues { (player, selection) -> selectionCache[player] to selection }
-            .filterValues { (old, new) -> old equalsWith new }
+            .filterValues { (old, new) -> !(old equalsWith new) }
             .forEach { player, (old, new) ->
                 val updateEvent = UpdatePlayerSelectionEvent(player, old, new)
                 eventBus.post(updateEvent)
