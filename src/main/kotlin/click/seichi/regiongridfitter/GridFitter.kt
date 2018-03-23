@@ -9,9 +9,9 @@ class GridFitter(private val gridSize: Int) {
 
     @Subscribe(priority = EventHandler.Priority.EARLY)
     fun onEditSession(event: UpdatePlayerSelectionEvent) {
-        val newSelection = event.newSelection ?: return
+        val newSelection = event.newSelection?.fitToGrid(gridSize) ?: return
 
-        event.newSelection = newSelection.fitToGrid(gridSize)
+        event.proposedSelection = newSelection
     }
 
 }

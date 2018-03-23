@@ -33,7 +33,7 @@ class PlayerCuboidSelectionObserver(private val server: Server, private val host
             .forEach { player, (old, new) ->
                 val updateEvent = UpdatePlayerSelectionEvent(player, old, new)
                 eventBus.post(updateEvent)
-                player.selection = updateEvent.newSelection
+                player.selection = updateEvent.proposedSelection
             }
 
     private fun observeState() {

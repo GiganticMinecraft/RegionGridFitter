@@ -7,7 +7,8 @@ import org.bukkit.entity.Player
 
 class UpdatePlayerSelectionEvent(val player: Player,
                                  val oldSelection: Selection?,
-                                 var newSelection: Selection?) : Event(), Cancellable {
+                                 val newSelection: Selection?) : Event(), Cancellable {
+    var proposedSelection = newSelection
 
     private var cancelled = false
 
