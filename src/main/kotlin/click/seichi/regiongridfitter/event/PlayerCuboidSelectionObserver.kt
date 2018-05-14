@@ -1,8 +1,8 @@
 package click.seichi.regiongridfitter.event
 
+import click.seichi.regiongridfitter.extensions.clone
+import click.seichi.regiongridfitter.extensions.equalsWith
 import click.seichi.regiongridfitter.extensions.selection
-import click.seichi.regiongridfitter.region.clone
-import click.seichi.regiongridfitter.region.equalsWith
 import click.seichi.regiongridfitter.util.filterNotNullValues
 import com.sk89q.worldedit.WorldEdit
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection
