@@ -25,9 +25,13 @@ class BypassSettingsManager: CommandExecutor {
         if (args.isNotEmpty() && args[0] == "toggle") {
             val current = isSetToBypass(player)
             val newState = !current
-            bypassMap[player] = newState
 
-            player.notifySettingsChange(newState)
+            if (player.hasPermission("gridregionfitter.togglebypass")) {
+                bypassMap[player] = newState
+                player.notifySettingsChange(newState)
+            } else {
+                player.sendMessage("${ChatColor.RED}パーミッションが不足しています。")
+            }
         } else {
             player.sendMessage("${ChatColor.RED}コマンドが見つかりませんでした。")
         }

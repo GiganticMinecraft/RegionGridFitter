@@ -3,3 +3,12 @@ version: 0.1.0-alpha
 main: click.seichi.regiongridfitter.RegionGridFitter
 
 softdepend: [WorldEdit, WorldGuard]
+commands:
+  gridregion:
+    usage: /regiongrid toggle - toggle grid fitter
+    description: toggles functionality of grid fitter
+
+permissions:
+  gridregionfitter.togglebypass:
+    description: allows a player to bypass the region fit
+    default: op

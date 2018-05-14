@@ -18,6 +18,8 @@ class RegionGridFitter: JavaPlugin() {
     override fun onEnable() {
         observer = observer ?: PlayerCuboidSelectionObserver(server, this)
 
+        getCommand("gridregion").executor = bypassSettingsManager
+
         worldEditBus.register(listener)
     }
 
