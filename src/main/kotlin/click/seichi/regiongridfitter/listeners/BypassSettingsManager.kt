@@ -20,7 +20,7 @@ class BypassSettingsManager: CommandExecutor {
             }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        val player = sender as? Player ?: return false.also { sender.sendMessage("プレーヤーのみ使用できるコマンドです") }
+        val player = sender as? Player ?: return sender.sendMessage("${ChatColor.RED}プレーヤーのみ使用できるコマンドです。").let { false }
 
         if (args.isNotEmpty() && args[0] == "toggle") {
             val current = isSetToBypass(player)
