@@ -1,4 +1,4 @@
-package click.seichi.regiongridfitter
+package click.seichi.regiongridfitter.listeners
 
 import click.seichi.regiongridfitter.event.UpdatePlayerSelectionEvent
 import click.seichi.regiongridfitter.extensions.toSpans
@@ -14,7 +14,7 @@ import org.bukkit.World
 /**
  * プレーヤーの選択領域が変更されたときにグリッドに強制フィットするようなリスナ
  */
-class GridFitter(private val gridSize: Int) {
+class GridFitter(private val gridSize: Int, private val bypassSettingsManager: BypassSettingsManager) {
 
     private fun toVertExtendedSelection(world: World, xSpan: RealSpan, zSpan: RealSpan): CuboidSelection {
         val (minX, maxX) = Pair(xSpan.smallEnd, xSpan.largeEnd)
@@ -35,9 +35,11 @@ class GridFitter(private val gridSize: Int) {
 
     @Subscribe(priority = EventHandler.Priority.EARLY)
     fun onEditSession(event: UpdatePlayerSelectionEvent) {
-        val newSelection = event.newSelection?.fitToGrid(gridSize) ?: return
+        if (!bypassSettingsManager.isSetToBypass(event.player)) {
+            val newSelection = event.newSelection?.fitToGrid(gridSize) ?: return
 
-        event.proposedSelection = newSelection
+            event.proposedSelection = newSelection
+        }
     }
 
 }
