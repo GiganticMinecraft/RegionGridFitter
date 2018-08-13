@@ -5,7 +5,7 @@ main: click.seichi.regiongridfitter.RegionGridFitter
 softdepend: [WorldEdit, WorldGuard]
 commands:
   gridregion:
-    usage: /regiongrid toggle - toggle grid fitter
+    usage: /gridregion toggle - toggle grid fitter
     description: toggles functionality of grid fitter
 
 permissions:
