@@ -1,6 +1,6 @@
 package click.seichi.regiongridfitter.listeners
 
-import click.seichi.regiongridfitter.event.UpdatePlayerSelectionEvent
+import click.seichi.regiongridfitter.event.CuboidSelectionUpdateEvent
 import click.seichi.regiongridfitter.extensions.toSpans
 import click.seichi.regiongridfitter.region.RealSpan
 import click.seichi.regiongridfitter.region.getQuantizedEnclosure
@@ -34,7 +34,7 @@ class GridFitter(private val gridSize: Int, private val bypassSettingsManager: B
     }
 
     @Subscribe(priority = EventHandler.Priority.EARLY)
-    fun onEditSession(event: UpdatePlayerSelectionEvent) {
+    fun onEditSession(event: CuboidSelectionUpdateEvent) {
         if (!bypassSettingsManager.isSetToBypass(event.player)) {
             val newSelection = event.newSelection?.fitToGrid(gridSize) ?: return
 

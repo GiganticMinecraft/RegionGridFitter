@@ -30,8 +30,8 @@ class PlayerCuboidSelectionObserver(private val server: Server, private val host
             .getPlayerSelections()
             .mapValues { (player, selection) -> selectionCache[player] to selection }
             .filterValues { (old, new) -> !(old equalsWith new) }
-            .forEach { player, (old, new) ->
-                val updateEvent = UpdatePlayerSelectionEvent(player, old, new)
+            .forEach { player, (_, new) ->
+                val updateEvent = CuboidSelectionUpdateEvent(player, new)
                 eventBus.post(updateEvent)
                 player.selection = updateEvent.proposedSelection
             }
