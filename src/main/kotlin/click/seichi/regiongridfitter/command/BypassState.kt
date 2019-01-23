@@ -1,4 +1,4 @@
-package click.seichi.regiongridfitter.listeners
+package click.seichi.regiongridfitter.command
 
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -6,11 +6,11 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class BypassSettingsManager: CommandExecutor {
+class BypassState: CommandExecutor {
 
     private val bypassMap: MutableMap<Player, Boolean> = HashMap()
 
-    fun isSetToBypass(player: Player): Boolean = bypassMap[player] ?: false
+    fun isSetToBypassFor(player: Player): Boolean = bypassMap[player] ?: false
 
     private fun Player.notifySettingsChange(switchedToBypass: Boolean) =
             if (switchedToBypass) {
@@ -23,7 +23,7 @@ class BypassSettingsManager: CommandExecutor {
         val player = sender as? Player ?: return sender.sendMessage("${ChatColor.RED}プレーヤーのみ使用できるコマンドです。").let { false }
 
         if (args.isNotEmpty() && args[0] == "toggle") {
-            val current = isSetToBypass(player)
+            val current = isSetToBypassFor(player)
             val newState = !current
 
             if (player.hasPermission("gridregionfitter.togglebypass")) {

@@ -1,8 +1,9 @@
 package click.seichi.regiongridfitter
 
+import click.seichi.regiongridfitter.configuration.WorldGridSizeConfig
 import click.seichi.regiongridfitter.event.PlayerCuboidSelectionObserver
-import click.seichi.regiongridfitter.listeners.BypassSettingsManager
-import click.seichi.regiongridfitter.listeners.GridFitter
+import click.seichi.regiongridfitter.command.BypassState
+import click.seichi.regiongridfitter.listeners.PlayerSelectionListener
 import com.sk89q.worldedit.WorldEdit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -10,8 +11,13 @@ class RegionGridFitter: JavaPlugin() {
 
     private val worldEditBus = WorldEdit.getInstance().eventBus
 
-    private val bypassSettingsManager = BypassSettingsManager()
-    private val listener = GridFitter(15, bypassSettingsManager)
+    private val bypassSettingsManager = BypassState()
+
+    private val worldGridSizeConfig = WorldGridSizeConfig.const(15)
+
+    private val listeners = listOf(
+            PlayerSelectionListener(worldGridSizeConfig, bypassSettingsManager)
+    )
 
     var observer: PlayerCuboidSelectionObserver? = null
 
@@ -20,11 +26,11 @@ class RegionGridFitter: JavaPlugin() {
 
         getCommand("gridregion").executor = bypassSettingsManager
 
-        worldEditBus.register(listener)
+        listeners.forEach { worldEditBus.register(it) }
     }
 
     override fun onDisable() {
-        worldEditBus.unregister(listener)
+        listeners.forEach { worldEditBus.unregister(it) }
     }
 
 }

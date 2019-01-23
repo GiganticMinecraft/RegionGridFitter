@@ -1,7 +1,6 @@
 package click.seichi.regiongridfitter.event
 
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection
-import com.sk89q.worldedit.bukkit.selections.Selection
 import com.sk89q.worldedit.event.Cancellable
 import com.sk89q.worldedit.event.Event
 import org.bukkit.entity.Player
