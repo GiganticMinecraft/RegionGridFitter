@@ -1,6 +1,8 @@
 package click.seichi.regiongridfitter.listeners
 
-import click.seichi.regiongridfitter.event.UpdatePlayerSelectionEvent
+import click.seichi.regiongridfitter.BypassState
+import click.seichi.regiongridfitter.configuration.WorldGridSizeConfig
+import click.seichi.regiongridfitter.event.CuboidSelectionUpdateEvent
 import click.seichi.regiongridfitter.extensions.toSpans
 import click.seichi.regiongridfitter.region.RealSpan
 import click.seichi.regiongridfitter.region.getQuantizedEnclosure
@@ -11,10 +13,8 @@ import com.sk89q.worldedit.util.eventbus.EventHandler
 import com.sk89q.worldedit.util.eventbus.Subscribe
 import org.bukkit.World
 
-/**
- * プレーヤーの選択領域が変更されたときにグリッドに強制フィットするようなリスナ
- */
-class GridFitter(private val gridSize: Int, private val bypassSettingsManager: BypassSettingsManager) {
+class PlayerSelectionListener(private val gridSizeConfig: WorldGridSizeConfig,
+                              private val bypassState: BypassState) {
 
     private fun toVertExtendedSelection(world: World, xSpan: RealSpan, zSpan: RealSpan): CuboidSelection {
         val (minX, maxX) = Pair(xSpan.smallEnd, xSpan.largeEnd)
@@ -34,11 +34,13 @@ class GridFitter(private val gridSize: Int, private val bypassSettingsManager: B
     }
 
     @Subscribe(priority = EventHandler.Priority.EARLY)
-    fun onEditSession(event: UpdatePlayerSelectionEvent) {
-        if (!bypassSettingsManager.isSetToBypass(event.player)) {
-            val newSelection = event.newSelection?.fitToGrid(gridSize) ?: return
+    fun onEditSession(event: CuboidSelectionUpdateEvent) {
+        if (!bypassState.isSetToBypassFor(event.player)) {
+            val proposedSelection = event.proposedSelection ?: return
+            val selectionWorld = proposedSelection.world ?: return
+            val gridSize = gridSizeConfig.gridSizeIn(selectionWorld)
 
-            event.proposedSelection = newSelection
+            event.proposedSelection = proposedSelection.fitToGrid(gridSize)
         }
     }
 
