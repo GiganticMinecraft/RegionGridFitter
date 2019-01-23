@@ -11,7 +11,10 @@ class RegionGridFitter: JavaPlugin() {
 
     private val worldEditBus = WorldEdit.getInstance().eventBus
 
-    private val worldGridSizeConfig = WorldGridSizeConfig.const(15)
+    private val worldGridSizeConfig = WorldGridSizeConfig(
+            config.getConfigurationSection("grid_size")?.getValues(false) ?: HashMap(),
+            config.getInt("default_grid_size")
+    )
 
     private val bypassState = BypassState()
     private val bypassSettingsManager = ToggleCommandExecutor(bypassState)
@@ -23,6 +26,8 @@ class RegionGridFitter: JavaPlugin() {
     var observer: PlayerCuboidSelectionObserver? = null
 
     override fun onEnable() {
+        saveDefaultConfig()
+
         observer = observer ?: PlayerCuboidSelectionObserver(server, this)
 
         getCommand("gridregion").executor = bypassSettingsManager
