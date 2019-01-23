@@ -1,34 +1,20 @@
 package click.seichi.regiongridfitter.command
 
+import click.seichi.regiongridfitter.BypassState
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class BypassState: CommandExecutor {
-
-    private val bypassMap: MutableMap<Player, Boolean> = HashMap()
-
-    fun isSetToBypassFor(player: Player): Boolean = bypassMap[player] ?: false
-
-    private fun Player.notifySettingsChange(switchedToBypass: Boolean) =
-            if (switchedToBypass) {
-                sendMessage("${ChatColor.YELLOW}選択領域のグリッドフィット処理をバイパスします")
-            } else {
-                sendMessage("${ChatColor.GREEN}選択領域をグリッドにフィットします")
-            }
+class ToggleCommandExecutor(private val bypassState: BypassState): CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         val player = sender as? Player ?: return sender.sendMessage("${ChatColor.RED}プレーヤーのみ使用できるコマンドです。").let { false }
 
         if (args.isNotEmpty() && args[0] == "toggle") {
-            val current = isSetToBypassFor(player)
-            val newState = !current
-
             if (player.hasPermission("gridregionfitter.togglebypass")) {
-                bypassMap[player] = newState
-                player.notifySettingsChange(newState)
+                bypassState.toggleAndNotifyChangeTo(player)
             } else {
                 player.sendMessage("${ChatColor.RED}パーミッションが不足しています。")
             }

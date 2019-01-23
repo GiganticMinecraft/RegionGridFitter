@@ -1,6 +1,6 @@
 package click.seichi.regiongridfitter.listeners
 
-import click.seichi.regiongridfitter.command.BypassState
+import click.seichi.regiongridfitter.BypassState
 import click.seichi.regiongridfitter.configuration.WorldGridSizeConfig
 import click.seichi.regiongridfitter.event.CuboidSelectionUpdateEvent
 import click.seichi.regiongridfitter.extensions.toSpans
