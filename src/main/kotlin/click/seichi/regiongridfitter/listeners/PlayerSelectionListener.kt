@@ -29,7 +29,7 @@ private fun CuboidSelection.gridEnclosure(gridSize: Int): CuboidSelection {
     val selectedRegion: CuboidRegion = (regionSelector as CuboidRegionSelector).region
 
     val (pos1X, pos2X) = (xGridSpan.smallEnd to xGridSpan.largeEnd).alignTo(selectedRegion.pos1.x to selectedRegion.pos2.x)
-    val (pos1Z, pos2Z) = (zGridSpan.smallEnd to xGridSpan.largeEnd).alignTo(selectedRegion.pos1.z to selectedRegion.pos2.z)
+    val (pos1Z, pos2Z) = (zGridSpan.smallEnd to zGridSpan.largeEnd).alignTo(selectedRegion.pos1.z to selectedRegion.pos2.z)
 
     val pos1 = Vector(pos1X, 0.0, pos1Z)
     val pos2 = Vector(pos2X, world!!.maxHeight.toDouble(), pos2Z)
