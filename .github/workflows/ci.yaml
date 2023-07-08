@@ -9,12 +9,13 @@ jobs:
   build_and_test:
     name: Build and Test
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
       matrix:
-        jdk-version:
-          - 8
-          - 11
+        include:
+          - jdk-version: 8
+            gradle-jvm-version: 1.8
+          - jdk-version: 11
+            gradle-jvm-version: 11
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -22,6 +23,8 @@ jobs:
         with:
           java-version: ${{ matrix.jdk-version }}
           distribution: temurin
+      - name: Set JVM version
+        run: sed -i -e "s/^jvm_version.*/jvm_version=${{ matrix.gradle-jvm-version }}/g" gradle.properties
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
@@ -30,6 +33,13 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: test
+      - name: Rename jar files
+        working-directory: ./build/libs/
+        run: |
+          for name in $(find . -type f -name '*.jar'); do
+            baseFileName=$(basename "$name" '.jar')
+            mv "$name" "$baseFileName.jdk${{ matrix.jdk-version }}.jar"
+          done
       - name: Upload a jar
         uses: actions/upload-artifact@v3
         with:
