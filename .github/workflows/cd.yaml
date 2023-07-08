@@ -1,0 +1,49 @@
+name: CD
+on:
+  push:
+    branches:
+      - master
+jobs:
+  ci:
+    uses: GiganticMinecraft/RegionGridFitter/.github/workflows/ci.yaml@master
+  output-sha:
+    name: Get SHA value of the latest commit
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.output-sha.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Outputs the value
+        id: output-sha
+        run: |
+          VALUE=$(git log --format='%h' -n 1)
+          echo "sha=$VALUE" >> $GITHUB_OUTPUT
+          echo $VALUE
+        shell: bash
+  cd:
+    name: Create release
+    runs-on: ubuntu-latest
+    needs:
+      - ci
+      - output-sha
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+      - name: Create and push a tag
+        id: tag-name
+        run: |
+          TAG_NAME=sha-${{ needs.output-sha.outputs.sha }}
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+          echo "value=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo $TAG_NAME
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag-name.outputs.value }}
+          draft: false
+          prerelease: true
+          files: artifact-*/*.jar
