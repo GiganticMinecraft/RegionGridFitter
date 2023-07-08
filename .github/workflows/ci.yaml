@@ -30,6 +30,13 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: test
+      - name: Rename jar files
+        working-directory: ./build/libs/
+        run: |
+          for name in $(find . -type f -name '*.jar'); do
+            baseFileName=$(basename "$name" '.jar')
+            mv "$name" "$baseFileName.jdk${{ matrix.jdk-version }}.jar"
+          done
       - name: Upload a jar
         uses: actions/upload-artifact@v3
         with:
