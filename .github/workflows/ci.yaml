@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches-ignore:
+      - master
+  pull_request:
+  workflow_call:
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk-version:
+          - 8
+          - 11
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.jdk-version }}
+          distribution: temurin
+      - name: Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: jar
+      - name: Test
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
+      - name: Upload a jar
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-${{ matrix.jdk-version }}
+          path: ./build/libs/
