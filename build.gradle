@@ -36,10 +36,10 @@ dependencies {
     embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
-
+    compile 'com.sk89q.worldedit:worldedit-core:6.1'
+    compile 'com.sk89q.worldedit:worldedit-bukkit:6.1.5'
 
     compile fileTree(dir: "libs", include: "*.jar")
-    compile group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version: '6.1.5'
 }
 
 jar {
