@@ -23,7 +23,7 @@ repositories {
     }
     maven {
         name = 'worldedit-repo'
-        url = 'http://maven.sk89q.com/repo/'
+        url = 'https://maven.enginehub.org/repo/'
     }
 }
 
@@ -39,7 +39,7 @@ dependencies {
 
 
     compile fileTree(dir: "libs", include: "*.jar")
-    compile group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version: '6.1.3-SNAPSHOT'
+    compile group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version: '6.1.5'
 }
 
 jar {
