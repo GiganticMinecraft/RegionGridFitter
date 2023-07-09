@@ -9,6 +9,6 @@ jobs:
   cd:
     name: CD
     uses: Lucky3028/shared-workflows/.github/workflows/kotlin-cd.yaml@main
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs:
       - ci
