@@ -1,0 +1,12 @@
+name: CI and CD
+on:
+  push:
+  pull_request:
+jobs:
+  ci:
+    uses: Lucky3028/shared-workflows/.github/workflows/kotlin-ci.yaml@main
+  cd:
+    uses: Lucky3028/shared-workflows/.github/workflows/kotlin-cd.yaml@main
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - ci
