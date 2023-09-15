@@ -6,6 +6,9 @@ jobs:
   ci:
     name: CI
     uses: Lucky3028/shared-workflows/.github/workflows/kotlin-ci.yaml@main
+    with:
+      jdk-version: 17
+      gradle-jvm-version: 17
   cd:
     name: CD
     uses: Lucky3028/shared-workflows/.github/workflows/kotlin-cd.yaml@main
