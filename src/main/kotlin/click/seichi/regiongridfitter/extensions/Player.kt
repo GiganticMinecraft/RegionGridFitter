@@ -26,7 +26,8 @@ var Player.selection: Region?
     set(newRegion) {
         if (newRegion == null) return
 
-        val localSession = worldEditPlugin.worldEdit.sessionManager.get(BukkitAdapter.adapt(this))
+        val player = BukkitAdapter.adapt(this)
+        val localSession = worldEditPlugin.worldEdit.sessionManager.get(player)
         val newSelector = CuboidRegionSelector(newRegion.world, newRegion.minimumPoint, newRegion.maximumPoint)
 
         localSession.setRegionSelector(newRegion.world, newSelector)
