@@ -40,7 +40,7 @@ class PlayerCuboidSelectionObserver(private val server: Server, private val host
         notifySelectionDifference()
         selectionCache = server.getPlayerSelections().mapValues { (_, sel) -> sel?.clone() }.filterNotNullValues()
 
-        server.scheduler.runTaskLater(hostPlugin, { observeState() }, 1L)
+        server.scheduler.runTaskLater(hostPlugin, Runnable { observeState() }, 1L)
     }
 
 }
