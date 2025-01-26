@@ -21,9 +21,10 @@ repositories {
         name = 'papermc-repo'
         url = 'https://repo.papermc.io/repository/maven-public/'
     }
+    // for FastAsyncWorldEdit
     maven {
-        name = 'worldedit-repo'
-        url = 'https://maven.enginehub.org/repo/'
+        name = 'sonatype-nexus'
+        url = 'https://eldonexus.de/repository/maven-public/'
     }
 }
 
@@ -36,8 +37,8 @@ dependencies {
     embed "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT'
-    implementation 'com.sk89q.worldedit:worldedit-core:6.1'
-    implementation 'com.sk89q.worldedit:worldedit-bukkit:6.1.5'
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.9.2'
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.9.2'
 
     implementation fileTree(dir: "libs", include: "*.jar")
 }
