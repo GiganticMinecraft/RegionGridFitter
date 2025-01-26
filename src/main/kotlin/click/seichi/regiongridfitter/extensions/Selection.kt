@@ -3,10 +3,10 @@ package click.seichi.regiongridfitter.extensions
 import click.seichi.regiongridfitter.region.RealSpan
 import com.sk89q.worldedit.bukkit.BukkitAdapter
 import com.sk89q.worldedit.math.BlockVector3
-import com.sk89q.worldedit.regions.RegionSelector
+import com.sk89q.worldedit.regions.CuboidRegion
 import org.bukkit.Location
 
-fun RegionSelector.toSpans(): Triple<RealSpan, RealSpan, RealSpan> {
+fun CuboidRegion.toSpans(): Triple<RealSpan, RealSpan, RealSpan> {
     fun Location.components() = Triple(x, y, z)
     fun <T> Pair<Triple<T, T, T>, Triple<T, T, T>>.transpose() = Triple(
             first.first to second.first,
@@ -15,7 +15,7 @@ fun RegionSelector.toSpans(): Triple<RealSpan, RealSpan, RealSpan> {
     )
     fun bukkitLocation(position: BlockVector3) = BukkitAdapter.adapt(BukkitAdapter.adapt(world), position)
 
-    val xyzSpans = Pair(bukkitLocation(region.maximumPoint).components(), bukkitLocation(region.minimumPoint).components()).transpose()
+    val xyzSpans = Pair(bukkitLocation(maximumPoint).components(), bukkitLocation(minimumPoint).components()).transpose()
             .toList()
             .map { RealSpan(it.first, it.second) }
 

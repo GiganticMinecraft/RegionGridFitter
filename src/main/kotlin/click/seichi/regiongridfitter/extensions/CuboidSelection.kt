@@ -1,14 +1,12 @@
 package click.seichi.regiongridfitter.extensions
 
-import com.sk89q.worldedit.regions.selector.CuboidRegionSelector
+import com.sk89q.worldedit.regions.CuboidRegion
 
-infix fun CuboidRegionSelector?.equalsWith(another: CuboidRegionSelector?) =
+infix fun CuboidRegion?.equalsWith(another: CuboidRegion?) =
         when (this) {
             null -> another == null
             else -> another != null &&
-                    region.maximumPoint == another.region.maximumPoint &&
-                    region.minimumPoint == another.region.minimumPoint &&
-                    world == another.world
+                    world == another.world &&
+                    maximumPoint == another.maximumPoint &&
+                    minimumPoint == another.minimumPoint
         }
-
-fun CuboidRegionSelector.clone() = CuboidRegionSelector(this)
