@@ -7,7 +7,7 @@ class BypassState {
 
     private val bypassMap: MutableMap<Player, Boolean> = HashMap()
 
-    fun isSetToBypassFor(player: Player): Boolean = bypassMap[player] ?: false
+    fun isSetToBypassFor(player: Player): Boolean = bypassMap[player] == true
 
     private fun notifyStateChangeTo(player: Player, switchedToBypass: Boolean) {
         val message = if (switchedToBypass) {
