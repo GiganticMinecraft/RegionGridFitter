@@ -30,7 +30,7 @@ class RegionGridFitter: JavaPlugin() {
 
         observer = observer ?: PlayerCuboidSelectionObserver(server, this)
 
-        getCommand("gridregion").executor = bypassSettingsManager
+        getCommand("gridregion")?.setExecutor(bypassSettingsManager)
 
         listeners.forEach { worldEditBus.register(it) }
     }
