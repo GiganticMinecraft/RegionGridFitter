@@ -5,9 +5,8 @@ import click.seichi.regiongridfitter.configuration.WorldGridSizeConfig
 import click.seichi.regiongridfitter.event.CuboidSelectionUpdateEvent
 import click.seichi.regiongridfitter.extensions.toSpans
 import click.seichi.regiongridfitter.region.getQuantizedEnclosure
-import com.sk89q.worldedit.Vector
-import com.sk89q.worldedit.bukkit.selections.CuboidSelection
-import com.sk89q.worldedit.regions.CuboidRegion
+import com.sk89q.worldedit.bukkit.BukkitAdapter
+import com.sk89q.worldedit.math.BlockVector3
 import com.sk89q.worldedit.regions.selector.CuboidRegionSelector
 import com.sk89q.worldedit.util.eventbus.EventHandler
 import com.sk89q.worldedit.util.eventbus.Subscribe
@@ -22,19 +21,17 @@ fun <A: Comparable<A>, T: Comparable<T>> Pair<A, A>.alignTo(pair: Pair<T, T>): P
     }
 }
 
-private fun CuboidSelection.gridEnclosure(gridSize: Int): CuboidSelection {
+private fun CuboidRegionSelector.gridEnclosure(gridSize: Int): CuboidRegionSelector {
     val (xSpan, _, zSpan) = toSpans()
     val (xGridSpan, zGridSpan) = listOf(xSpan, zSpan).map { it.getQuantizedEnclosure(gridSize) }
 
-    val selectedRegion: CuboidRegion = (regionSelector as CuboidRegionSelector).region
+    val (pos1X, pos2X) = (xGridSpan.smallEnd to xGridSpan.largeEnd).alignTo(region.pos1.x to region.pos2.x)
+    val (pos1Z, pos2Z) = (zGridSpan.smallEnd to zGridSpan.largeEnd).alignTo(region.pos1.z to region.pos2.z)
 
-    val (pos1X, pos2X) = (xGridSpan.smallEnd to xGridSpan.largeEnd).alignTo(selectedRegion.pos1.x to selectedRegion.pos2.x)
-    val (pos1Z, pos2Z) = (zGridSpan.smallEnd to zGridSpan.largeEnd).alignTo(selectedRegion.pos1.z to selectedRegion.pos2.z)
+    val pos1 = BlockVector3.at(pos1X, 0.0, pos1Z)
+    val pos2 = BlockVector3.at(pos2X, world!!.maxY.toDouble(), pos2Z)
 
-    val pos1 = Vector(pos1X, 0.0, pos1Z)
-    val pos2 = Vector(pos2X, world!!.maxHeight.toDouble(), pos2Z)
-
-    return CuboidSelection(world, pos1, pos2)
+    return CuboidRegionSelector(world, pos1, pos2)
 }
 
 class PlayerSelectionListener(private val gridSizeConfig: WorldGridSizeConfig,
@@ -45,7 +42,7 @@ class PlayerSelectionListener(private val gridSizeConfig: WorldGridSizeConfig,
         if (!bypassState.isSetToBypassFor(event.player)) {
             val proposedSelection = event.proposedSelection ?: return
             val selectionWorld = proposedSelection.world ?: return
-            val gridSize = gridSizeConfig.gridSizeIn(selectionWorld)
+            val gridSize = gridSizeConfig.gridSizeIn(BukkitAdapter.adapt(selectionWorld))
 
             event.proposedSelection = proposedSelection.gridEnclosure(gridSize)
         }

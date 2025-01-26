@@ -1,12 +1,12 @@
 package click.seichi.regiongridfitter.event
 
-import com.sk89q.worldedit.bukkit.selections.CuboidSelection
 import com.sk89q.worldedit.event.Cancellable
 import com.sk89q.worldedit.event.Event
+import com.sk89q.worldedit.regions.selector.CuboidRegionSelector
 import org.bukkit.entity.Player
 
 class CuboidSelectionUpdateEvent(val player: Player,
-                                 val newSelection: CuboidSelection?) : Event(), Cancellable {
+                                 newSelection: CuboidRegionSelector?) : Event(), Cancellable {
 
     var proposedSelection = newSelection
 
