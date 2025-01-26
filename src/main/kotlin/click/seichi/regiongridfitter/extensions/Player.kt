@@ -30,4 +30,5 @@ var Player.selection: Region?
         val newSelector = CuboidRegionSelector(newRegion.world, newRegion.minimumPoint, newRegion.maximumPoint)
 
         localSession.setRegionSelector(newRegion.world, newSelector)
+        localSession.dispatchCUISelection(player)
     }
