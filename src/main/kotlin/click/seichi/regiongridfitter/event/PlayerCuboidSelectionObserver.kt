@@ -17,8 +17,8 @@ class PlayerCuboidSelectionObserver(private val server: Server, private val host
     private val worldEdit = WorldEdit.getInstance()
     private val eventBus = worldEdit.eventBus
 
-    private fun Server.getPlayerSelections() = onlinePlayers
-            .map { it -> it!! to it.selection as? CuboidSelection }.toMap()
+    private fun Server.getPlayerSelections() =
+        onlinePlayers.associate { it -> it!! to it.selection as? CuboidSelection }
 
     init {
         server.pluginManager.registerEvents(this, hostPlugin)
@@ -40,7 +40,7 @@ class PlayerCuboidSelectionObserver(private val server: Server, private val host
         notifySelectionDifference()
         selectionCache = server.getPlayerSelections().mapValues { (_, sel) -> sel?.clone() }.filterNotNullValues()
 
-        server.scheduler.runTaskLater(hostPlugin, { observeState() }, 1L)
+        server.scheduler.runTaskLater(hostPlugin, Runnable { observeState() }, 1L)
     }
 
 }
