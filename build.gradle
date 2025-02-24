@@ -1,10 +1,8 @@
 buildscript {
     ext.kotlin_version = '2.1.10'
-
     repositories {
         mavenCentral()
     }
-
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -21,7 +19,7 @@ repositories {
         name = 'papermc-repo'
         url = 'https://repo.papermc.io/repository/maven-public/'
     }
-    // for FastAsyncWorldEdit
+    // For FastAsyncWorldEdit
     maven {
         name = 'sonatype-nexus'
         url = 'https://eldonexus.de/repository/maven-public/'
@@ -37,6 +35,12 @@ dependencies {
     embed "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT'
+
+    /**
+     * 最新パッチによる API の削除などを回避するため，FastAsyncWorldEdit API はバージョンを v2.9.2 に固定しておく必要がある．
+     * Renovate はこの依存関係についての更新は無視するようになっている．
+     * 詳細: https://github.com/GiganticMinecraft/RegionGridFitter/issues/26
+     */
     implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.9.2'
     implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.9.2'
 
