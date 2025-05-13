@@ -11,7 +11,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.21")
     }
 }
 
@@ -26,8 +26,8 @@ repositories {
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-stdlib:2.1.20")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.20")
+    api("org.jetbrains.kotlin:kotlin-stdlib:2.1.21")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.21")
     implementation("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.9.2")
     implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.9.2")
