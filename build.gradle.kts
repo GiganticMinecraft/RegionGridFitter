@@ -2,7 +2,7 @@ group = "click.seichi"
 version = "0.1.0-alpha"
 
 plugins {
-    kotlin("jvm") version "2.1.21"
+    kotlin("jvm") version "2.2.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
