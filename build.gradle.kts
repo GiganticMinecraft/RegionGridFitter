@@ -30,7 +30,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.2.21")
     implementation("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.9.2")
-    implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.9.2")
+    implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.14.0")
 }
 
 val targetJavaVersion = 17
