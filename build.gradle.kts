@@ -28,7 +28,7 @@ repositories {
 dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib:2.4.21")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.4.21")
-    implementation("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    implementation("io.papermc.paper:paper-api:26.3.build.257-stable")
     implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.9.2")
     implementation("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.9.2")
 }
