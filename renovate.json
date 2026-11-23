@@ -3,6 +3,7 @@
   "extends": ["github>GiganticMinecraft/renovate-config"],
   "ignoreDeps": [
     "com.fastasyncworldedit:FastAsyncWorldEdit-Core",
-    "com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit"
+    "com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit",
+    "io.papermc.paper:paper-api"
   ]
 }
